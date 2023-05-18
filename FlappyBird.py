@@ -10,8 +10,8 @@ collision = False
 class Game():
     def Pipe(self,OX_position, split):  #Funkcja rysująca rure
         for i in range(height):     # petla w zakresie do zmiennej height (wazne aby nei bylo tam stalej liczby a zmienna jesli chcemy latwiej zmieniac wielkosc ekranu gry)
-            if(not(split-3 <= 1 <= split))
-            gameBoard[i][OX_position]= "#"
+            if(not(split-3 <= 1 <= split)):
+                gameBoard[i][OX_position]= "#"
             if(OX_position+1 < width):  #jeżeli zmienna jest mniejsza niż wysokość, to do elementu gameBoard[i][xpos+1] przypisywany jest znak '#' o takim samym kolorze jak wcześniej
                 gameBoard[i][OX_position+1] = '#'
                 if(OX_position+2 < width):  #jeżeli zmienna jest mniejsza niż wysokość to do elementu gameBoard[i][xpos+2] przypisywany jest znak '-' 
@@ -32,7 +32,7 @@ class Game():
             split = random.randint(5, 8)  #każda rura ma losową wartość split
             pipeSplitsQueue.append(split) #lista kolejek kolejnych rur jest wypełniana losowymi wartościami split <5,8>
             thisPipe = Game()#dla każdej rury tworzony jest obiekt klasy Game() a następnie wywoływana metoda drawPipe, która rysuje rurę na planszy. Metoda drawPipe przyjmuje dwa argumenty (pozycję rury(i) oraz split)
-            thisPipe.drawPipe(i, split)
+            thisPipe.Pipe(i, split)
 
     def printFrame(self): #funkcja ma na celu wyświetlić ramkę planszy gry na ekranie
         for i in range(height):
@@ -40,13 +40,23 @@ class Game():
             for j in range(width):
                 res += gameBoard[i][j] #w każdej iteracji pętli , wartość gameBoard[i][j] jest dodawana do łańcucha znaków res
             print(res) #po zakończeniu pętli całość planszy drukowana jest na ekranie
+    def updatePipes(self, frames): #funckja ta jest odpowiedzialna za aktualizowanie rur w grze            
+        
+        if(frames % 3 == 0): #instrukcja if sprawdza, czy liczba ramek jest podzielna przez 3 za pomocą operatora modulo. Jeśli tak, to pozycja pierwszej rury jest zmniejszana o 1
+            global score
+            global firstPipePos
+            firstPipePos -= 1  
+                                                             
+            if(firstPipePos == 5): #jeżeli pozycja rury wyniosła 5, to wynik gracza jest zwiększany o 1
+                score += 1
 
 #Budowa Ptaka/ gracza:
 
 class Bird():
     
     def D_Bird(self, x ,y):
-        global Bird_OY_Position = y
+        global Bird_OY_Position
+        Bird_OY_Position = y
         face = '>'
         body = '[]'
         for i in range(height): #pętla for iterująca przez cała wysokość - 1
@@ -84,7 +94,7 @@ class Bird():
             #jeśli tak, to zmienna dropBy zostaje ustawiona na 0, aby uniemożliwić dalsze opadanie ptaka
             dropBy = 0
         bird = Bird()   #tworzy nowy obiekt klasy "Bird", która zawiera informacje o wyglądzie i pozycji ptaka na ekranie
-        bird.drawBird(5, birdYPos+dropBy) #bird.drawBird(5, birdYPos+dropBy) - wywołuje metodę drawBird() na obiekcie bird, która rysuje ptaka na ekranie 
+        bird.D_Bird(5, Bird_OY_Position+dropBy) #bird.drawBird(5, birdYPos+dropBy) - wywołuje metodę drawBird() na obiekcie bird, która rysuje ptaka na ekranie 
 
 
 class Main():
@@ -110,4 +120,34 @@ class Main():
             frames += 1                      #zwiększenie wartości 'frames' o 1 
             if(frames == 1000):              #jeśli wartość osiągnie wartość 1000 to resetujemy ją do frames = 1
                 frames = 1
-            print("Your score is " + score)   #wyświetlenie wyniku użytkownika na ekranie
+            print("Your score is " + str(score))       #wyświetlenie wyniku użytkownika na ekranie
+
+            print("Press \"e\" to end the round")
+            print("Press space to jump! ")
+            t0 = time.time()                           #pobranie czasu rozpoczęcia interakcji użytkownika z klawiaturą i ustawiamy ją na wartość 'False'
+            jumped = False                             
+            while(time.time()-t0 < frameTime):         # utworzenie pętli, która działa przez określony czas 'frameTime' i czeka na interakcję użytkownika z klawiaturą, 
+                                                       #jeśli użytkownik naciśnie spację, ustawiamy wartość 'jumped' na 'True' i wywołujemy metodę 'jump()' na obiekcie 'bird', która wykonuje skok ptaka,
+                if keyboard.is_pressed(' '):           #jeśli użytkownik naciśnie klawisz e, to ustawiamy wartość 'endGame' na 'True' i kończymy grę
+                    jumped = True;                     #
+                    bird.jump()                        #
+                    break;                             #
+                elif keyboard.is_pressed('e'):         #
+                    endGame = True                     #
+                    break                              #
+
+            wait = round(time.time()-t0, 2)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
+            
+            time.sleep(frameTime-wait)                       #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
+
+        if(collision):                                       #sprawdzenie, czy w trakcie gry doszło do kolizji między ptakiem a rurami, jeśli tak, wyświetla stosowny komunikat
+            print("\nWhoops, you had a collision!")
+        userIn = input("\nType \"end\" to end the game, press \"enter\" to play again:\n")
+        if("end" in userIn):              #jeśli użytkownik wprowadził "end" na wejściu, ustawia wartość 'endGame' na True, co spowoduje zakończenie gry
+            endGame = True
+        else:                             #jeśli użytkownik wprowadził cokolwiek innego, ustawia wartości 'collision'i endGame na False, co umożliwi ponowne uruchomienie gry
+            collision = endGame = False 
+
+
+if __name__ == '__main__':
+    Main()           #wywołanie funkcji 'main'
