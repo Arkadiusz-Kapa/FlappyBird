@@ -1,1 +1,2 @@
 # FlappyBird
+pip install keyboard
