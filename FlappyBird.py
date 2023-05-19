@@ -1,24 +1,26 @@
 import keyboard, os, random, time
 
 #Zmienne globalne:
-width, height = 200, 20 #ustawienie wysokości i szerokości
+width, height = 100, 10 #ustawienie wysokości i szerokości
 Bird_OY_Position = height // 2
 pipeSplitsQueue = []
 gameBoard = [[0 for x in range(width)] for y in range(height)]
 collision = False
+firstPipePos = score = 0
 
 class Game():
     def Pipe(self,OX_position, split):  #Funkcja rysująca rure
         for i in range(height):     # petla w zakresie do zmiennej height (wazne aby nei bylo tam stalej liczby a zmienna jesli chcemy latwiej zmieniac wielkosc ekranu gry)
-            if(not(split-3 <= 1 <= split)):
+            if(not(split-3 <= i <= split)):
                 gameBoard[i][OX_position]= "#"
-            if(OX_position+1 < width):  #jeżeli zmienna jest mniejsza niż wysokość, to do elementu gameBoard[i][xpos+1] przypisywany jest znak '#' o takim samym kolorze jak wcześniej
-                gameBoard[i][OX_position+1] = '#'
-                if(OX_position+2 < width):  #jeżeli zmienna jest mniejsza niż wysokość to do elementu gameBoard[i][xpos+2] przypisywany jest znak '-' 
-                    gameBoard[i][OX_position+2] = '-' if (i < 8) else '=' #jeżli i>= 8 zostanie użyty znak '=' 
+                if(OX_position+1 < width):  #jeżeli zmienna jest mniejsza niż wysokość, to do elementu gameBoard[i][xpos+1] przypisywany jest znak '#' o takim samym kolorze jak wcześniej
+                    gameBoard[i][OX_position+1] = '#'
+                    if(OX_position+2 < width):  #jeżeli zmienna jest mniejsza niż wysokość to do elementu gameBoard[i][xpos+2] przypisywany jest znak '-' 
+                        gameBoard[i][OX_position+2] = '-' if (i < 8) else '=' #jeżli i>= 8 zostanie użyty znak '=' 
     def Pipe_del(self, OX_position):
-        gameBoard[i][xpos] = '-'if (i < 8) else '='  #ustawia wartość elementu gameBoard[i][xpos] w zależności od zmiennej i używany jest znak '-' lub znak '='
-        gameBoard[i][xpos+1] = '-'if (i < 8) else '=' #ustawia analogicznie element gameBoard[i][xpos+1]
+            for i in range(height):
+                gameBoard[i][OX_position] = '-'if (i < 8) else '='  #ustawia wartość elementu gameBoard[i][xpos] w zależności od zmiennej i używany jest znak '-' lub znak '='
+                gameBoard[i][OX_position+1] = '-'if (i < 8) else '=' #ustawia analogicznie element gameBoard[i][xpos+1]
     
     def startGame(self):
      #funkcja startująca gre
@@ -53,18 +55,18 @@ class Game():
                                                         #Funkcja tworzy nową instancję klasy Game i wywołuje metodę deletePipe w celu usunięcia rury, która zniknęł z ekranu. 
                                                         # Pozycja pierwszej rury jest następnie zwiększana o 15, a pierwszy podział w kolejce podziałów dla nowych rur jest usuwany.
                 thisPipe = Game()
-                thisPipe.deletePipe(firstPipePos+1)
+                thisPipe.Pipe_del(firstPipePos+1)
                 firstPipePos += 15
                 pipeSplitsQueue.pop(0)
             c = 0
-            for i in range(firstPipePos, w, 15): #pętla for przechodzi przez wszytkie pozycje na planszy pomiędzy pierwszą rurą a końcem planszy zdefiniowanej jako 'w'
+            for i in range(firstPipePos, width , 15): #pętla for przechodzi przez wszytkie pozycje na planszy pomiędzy pierwszą rurą a końcem planszy zdefiniowanej jako 'w'
                 thisPipe = Game()  #dla każdej pozycji na planszy, tworzony jest nowy obiekt 'Game'
                 if(c < len(pipeSplitsQueue)):   #sprawdzane jest czy istnieje już kolejka podziałów rury o odpowiedniej długości, w której są zapisane wyniki losowania z funkcji 'drawPipe'
-                    thisPipe.drawPipe(i, pipeSplitsQueue[c]) #jeśli istnieje, to rysujemy rure na bieżącej planszy, korzystając z podziau rury, który znajduje się w 'pipeSplitsQueue[c]'
+                    thisPipe.Pipe(i, pipeSplitsQueue[c]) #jeśli istnieje, to rysujemy rure na bieżącej planszy, korzystając z podziau rury, który znajduje się w 'pipeSplitsQueue[c]'
                 else: #w przeciwnym razie losujemy nowy podział rury i dodajemy go do kolejki, a następnie rysujemy rurę z tym podziałem 
                     split = random.randint(5, 8)
                     pipeSplitsQueue.append(split)
-                    thisPipe.drawPipe(i, split)
+                    thisPipe.Pipe(i, split)
                 c += 1 #zwiększamy wartość licznika c o 1, aby przejść do następnego podziału rury z kolejki podziałów rury
 
 #Budowa Ptaka/ gracza:
@@ -81,7 +83,6 @@ class Bird():
                 coor = gameBoard[i][j] #utworzenie zmiennej 'coor' i nadanie jej wartości 'gameBoard[i][j]'
                 if(coor == body or coor == face): #sprawdzenie czy któryś z elementów ptaka jest równy z 'coor' 
                     gameBoard[i][j] = '-' if (i < 8) else '=' #jeżeli tak to przypisuje 'gameBoard[i][j]' nową wartość 
-
         coor = gameBoard[y][x]
         right = gameBoard[y][x+1]
         twoR = gameBoard[y][x+2]
@@ -92,16 +93,15 @@ class Bird():
             collision = True
 
         mainBody = '[]'
-        gameBoard[y][x] = mainBody           
-        gameBoard[y][x+1] = mainBody  
-        gameBoard[y][x+2] = '>'  
+        gameBoard[y][x] = mainBody            
+        gameBoard[y][x+1] = '>'  
     def jump(self):     #zdefiniowanie funkcji 'jump'
         
         raise_by = 0        #inicjacja zmiennej 'raiseby' na 0, zmienna ta określa, o ile pikseli zostanie przesunięty ptak w górę w wyniku skoku
         if(Bird_OY_Position > 1):  #sprawdza, czy bieżąca pozycja ptaka jest większa niż 1, jest to potrzebne, ponieważ nie chcemy, aby pt ak skakał poza górną granicę okna gry
             raise_by = 1    #jeśli bieżąca pozycja ptaka jest większa niż 1, to zmienna raiseby zostaje ustawiona na 1, co oznacza, że ptak zostanie przesunięty o 1 piksel w górę
         bird = Bird()      #tworzy nowy obiekt klasy 'Bird', która zawiera informacje o wyglądzie i pozycji ptaka na ekranie   
-        bird.D_Bird(5, Bird_OY_Position-raise_by) #wywołuje metodę 'drawBird()' na obiekcie bird, która rysuje ptaka na ekranie 
+        bird.D_Bird(5, Bird_OY_Position+raise_by) #wywołuje metodę 'drawBird()' na obiekcie bird, która rysuje ptaka na ekranie 
         #argumenty 5 i Bird_OY_Postition-raiseby przekazane do metody 'drawBird()' określają położenie ptaka na osi X oraz Y odpowiednio
     
     def gravity(self):  #zdefiniowanie funkcji 'gravity'
