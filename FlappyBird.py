@@ -49,6 +49,23 @@ class Game():
                                                              
             if(firstPipePos == 5): #jeżeli pozycja rury wyniosła 5, to wynik gracza jest zwiększany o 1
                 score += 1
+            if(firstPipePos < 0):                       #Jeśli pozycja pierwszej rury jest mniejsza niż 0, oznacza to, że rura zniknęła z ekranu i należy ją usunąć. 
+                                                        #Funkcja tworzy nową instancję klasy Game i wywołuje metodę deletePipe w celu usunięcia rury, która zniknęł z ekranu. 
+                                                        # Pozycja pierwszej rury jest następnie zwiększana o 15, a pierwszy podział w kolejce podziałów dla nowych rur jest usuwany.
+                thisPipe = Game()
+                thisPipe.deletePipe(firstPipePos+1)
+                firstPipePos += 15
+                pipeSplitsQueue.pop(0)
+            c = 0
+            for i in range(firstPipePos, w, 15): #pętla for przechodzi przez wszytkie pozycje na planszy pomiędzy pierwszą rurą a końcem planszy zdefiniowanej jako 'w'
+                thisPipe = Game()  #dla każdej pozycji na planszy, tworzony jest nowy obiekt 'Game'
+                if(c < len(pipeSplitsQueue)):   #sprawdzane jest czy istnieje już kolejka podziałów rury o odpowiedniej długości, w której są zapisane wyniki losowania z funkcji 'drawPipe'
+                    thisPipe.drawPipe(i, pipeSplitsQueue[c]) #jeśli istnieje, to rysujemy rure na bieżącej planszy, korzystając z podziau rury, który znajduje się w 'pipeSplitsQueue[c]'
+                else: #w przeciwnym razie losujemy nowy podział rury i dodajemy go do kolejki, a następnie rysujemy rurę z tym podziałem 
+                    split = random.randint(5, 8)
+                    pipeSplitsQueue.append(split)
+                    thisPipe.drawPipe(i, split)
+                c += 1 #zwiększamy wartość licznika c o 1, aby przejść do następnego podziału rury z kolejki podziałów rury
 
 #Budowa Ptaka/ gracza:
 
