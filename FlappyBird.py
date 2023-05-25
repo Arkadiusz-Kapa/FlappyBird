@@ -1,5 +1,7 @@
 import keyboard, os, random, time
 
+#zmiana preskodsci frametime:
+game_speed = 0.2
 #Zmienne globalne:
 width, height = 100, 10 #ustawienie wysokości i szerokości
 Bird_OY_Position = height // 2
@@ -12,9 +14,9 @@ class Game():
     def Pipe(self,OX_position, split):  #Funkcja rysująca rure
         for i in range(height):     # petla w zakresie do zmiennej height (wazne aby nei bylo tam stalej liczby a zmienna jesli chcemy latwiej zmieniac wielkosc ekranu gry)
             if(not(split-3 <= i <= split)):
-                gameBoard[i][OX_position]= "#"
+                gameBoard[i][OX_position]= "█"
                 if(OX_position+1 < width):  #jeżeli zmienna jest mniejsza niż wysokość, to do elementu gameBoard[i][xpos+1] przypisywany jest znak '#' o takim samym kolorze jak wcześniej
-                    gameBoard[i][OX_position+1] = '#'
+                    gameBoard[i][OX_position+1] = '█'
                     if(OX_position+2 < width):  #jeżeli zmienna jest mniejsza niż wysokość to do elementu gameBoard[i][xpos+2] przypisywany jest znak '-' 
                         gameBoard[i][OX_position+2] = '-' if (i < 8) else '=' #jeżli i>= 8 zostanie użyty znak '=' 
     def Pipe_del(self, OX_position):
@@ -77,7 +79,7 @@ class Bird():
         global Bird_OY_Position
         Bird_OY_Position = y
         face = '>'
-        body = 'U'
+        body = '#'
         for i in range(height): #pętla for iterująca przez cała wysokość - 1
             for j in range(x, x+3):  #pętla for iterująca od wartości x do wartości x + 3
                 coor = gameBoard[i][j] #utworzenie zmiennej 'coor' i nadanie jej wartości 'gameBoard[i][j]'
@@ -85,13 +87,13 @@ class Bird():
                     gameBoard[i][j] = '-' if (i < 8) else '=' #jeżeli tak to przypisuje 'gameBoard[i][j]' nową wartość 
         coor = gameBoard[y][x]
         right = gameBoard[y][x+1]
-        pole = '#'
+        pole = '█'
 
         if(coor == pole or right == pole): #sprawdzenie czy ptak nie udeżył w rure ,jeżeli tak to kolizje ustawiamy na 'True"
             global collision
             collision = True
 
-        mainBody = 'U'
+        mainBody = '#'
         gameBoard[y][x] = mainBody            
         gameBoard[y][x+1] = '>'  
     def jump(self):     #zdefiniowanie funkcji 'jump'
@@ -118,7 +120,7 @@ class main():
     jumped = endGame = scoreUpdated = False   #inicjuja trzech zmiennych boolowskich (jumped, endGame, scoreUpdated) na wartość False, jumped przechowuje informację o tym, czy ptak wykonał już skok, 
                                               #'endGame' przechowuje informację o tym, czy gra powinna się zakończyć, a scoreUpdated przechowuje informację o tym, czy wynik gracza został zaktualizowany                                    
     frames = 1                   #inicjuja zmiennej 'frames' na wartość 1, zmienna ta przechowuje informację o liczbie klatek gry, która została już wyświetlona                 
-    frameTime = 0.2              #inicjuja zmiennej 'frameTime' na wartość 0.2, zmienna ta przechowuje informację o czasie trwania jednej klatki gry
+    frameTime = game_speed              #inicjuja zmiennej 'frameTime' na wartość 0.2, zmienna ta przechowuje informację o czasie trwania jednej klatki gry
     while(not endGame):          #rozpoczyna pętlę nieskończoną, która będzie działać, dopóki gra nie zostanie zakończona.
         score = 0                #ustawienie wartość wyniku gracza na 0.
         game = Game()            #tworzenie nowego obiektu klasy 'Game', który reprezętuje gre
@@ -152,9 +154,9 @@ class main():
                     endGame = True                     #
                     break                              #
 
-            wait = round(time.time()-t0, 2)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
+            wait = round(time.time()-t0, 1)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
             
-            time.sleep(frameTime-wait)  #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
+            time.sleep(frameTime-wait)        
 
         if(collision):                                       #sprawdzenie, czy w trakcie gry doszło do kolizji między ptakiem a rurami, jeśli tak, wyświetla stosowny komunikat
             print("\nWhoops, you had a collision!")
