@@ -152,7 +152,7 @@ class main():
                     endGame = True                     #
                     break                              #
 
-            wait = round(time.time()-t0, 3)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
+            wait = round(time.time()-t0, 2)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
             
             time.sleep(frameTime-wait)  #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
 
