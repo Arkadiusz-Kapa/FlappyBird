@@ -152,15 +152,15 @@ class main():
                     endGame = True                     #
                     break                              #
 
-            wait = round(time.time()-t0, 2)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
+            wait = round(time.time()-t0, 3)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
             
-            time.sleep(frameTime-wait)                       #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
+            time.sleep(frameTime-wait)  #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
 
         if(collision):                                       #sprawdzenie, czy w trakcie gry doszło do kolizji między ptakiem a rurami, jeśli tak, wyświetla stosowny komunikat
             print("\nWhoops, you had a collision!")
         userIn = input("\nType \"end\" to end the game, press \"enter\" to play again:\n")
         if("end" in userIn):              #jeśli użytkownik wprowadził "end" na wejściu, ustawia wartość 'endGame' na True, co spowoduje zakończenie gry
-            endGame = True
+            endGame = True      
         else:                             #jeśli użytkownik wprowadził cokolwiek innego, ustawia wartości 'collision'i endGame na False, co umożliwi ponowne uruchomienie gry
             collision = endGame = False 
 
