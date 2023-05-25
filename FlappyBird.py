@@ -77,7 +77,7 @@ class Bird():
         global Bird_OY_Position
         Bird_OY_Position = y
         face = '>'
-        body = '[]'
+        body = 'U'
         for i in range(height): #pętla for iterująca przez cała wysokość - 1
             for j in range(x, x+3):  #pętla for iterująca od wartości x do wartości x + 3
                 coor = gameBoard[i][j] #utworzenie zmiennej 'coor' i nadanie jej wartości 'gameBoard[i][j]'
@@ -89,9 +89,9 @@ class Bird():
 
         if(coor == pole or right == pole): #sprawdzenie czy ptak nie udeżył w rure ,jeżeli tak to kolizje ustawiamy na 'True"
             global collision
-            collision = True        
+            collision = True
 
-        mainBody = '[]'
+        mainBody = 'U'
         gameBoard[y][x] = mainBody            
         gameBoard[y][x+1] = '>'  
     def jump(self):     #zdefiniowanie funkcji 'jump'
@@ -152,7 +152,7 @@ class main():
                     endGame = True                     #
                     break                              #
 
-            wait = round(time.time()-t0, 1)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
+            wait = round(time.time()-t0, 2)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
             
             time.sleep(frameTime-wait)                       #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
 
@@ -166,4 +166,4 @@ class main():
 
 
 if __name__ == '__main__':
-    main()           #wywołanie funkcji 'main'
+    main()           #wywołanie funkcji 'main'  
