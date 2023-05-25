@@ -66,7 +66,7 @@ class Game():
                 else: #w przeciwnym razie losujemy nowy podział rury i dodajemy go do kolejki, a następnie rysujemy rurę z tym podziałem 
                     split = random.randint(5, 8)
                     pipeSplitsQueue.append(split)
-                    thisPipe.Pipe(i, split) 
+                    thisPipe.Pipe(i, split)
                 c += 1 #zwiększamy wartość licznika c o 1, aby przejść do następnego podziału rury z kolejki podziałów rury
 
 #Budowa Ptaka/ gracza:
@@ -76,8 +76,8 @@ class Bird():
     def D_Bird(self, x ,y):
         global Bird_OY_Position
         Bird_OY_Position = y
-        face = '[]'
-        body = '>'
+        face = '>'
+        body = '[]'
         for i in range(height): #pętla for iterująca przez cała wysokość - 1
             for j in range(x, x+3):  #pętla for iterująca od wartości x do wartości x + 3
                 coor = gameBoard[i][j] #utworzenie zmiennej 'coor' i nadanie jej wartości 'gameBoard[i][j]'
@@ -85,12 +85,11 @@ class Bird():
                     gameBoard[i][j] = '-' if (i < 8) else '=' #jeżeli tak to przypisuje 'gameBoard[i][j]' nową wartość 
         coor = gameBoard[y][x]
         right = gameBoard[y][x+1]
-        twoR = gameBoard[y][x+2]
         pole = '#'
 
-        if(coor == pole or right == pole or twoR == pole): #sprawdzenie czy ptak nie udeżył w rure ,jeżeli tak to kolizje ustawiamy na 'True"
+        if(coor == pole or right == pole): #sprawdzenie czy ptak nie udeżył w rure ,jeżeli tak to kolizje ustawiamy na 'True"
             global collision
-            collision = True
+            collision = True        
 
         mainBody = '[]'
         gameBoard[y][x] = mainBody            
@@ -114,7 +113,7 @@ class Bird():
         bird.D_Bird(5, Bird_OY_Position+dropBy) #bird.drawBird(5, birdYPos+dropBy) - wywołuje metodę drawBird() na obiekcie bird, która rysuje ptaka na ekranie 
 
 
-class Main():
+class main():
     global collision, score    #deklaruje zmienne 'collision' i 'score' jako zmienne globalne, 'collision' przechowuje informację o tym, czy ptak zderzył się z rurą, a score przechowuje wynik gracza                                  
     jumped = endGame = scoreUpdated = False   #inicjuja trzech zmiennych boolowskich (jumped, endGame, scoreUpdated) na wartość False, jumped przechowuje informację o tym, czy ptak wykonał już skok, 
                                               #'endGame' przechowuje informację o tym, czy gra powinna się zakończyć, a scoreUpdated przechowuje informację o tym, czy wynik gracza został zaktualizowany                                    
@@ -167,4 +166,4 @@ class Main():
 
 
 if __name__ == '__main__':
-    Main()           #wywołanie funkcji 'main'
+    main()           #wywołanie funkcji 'main'
