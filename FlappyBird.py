@@ -36,12 +36,12 @@ class Game():
             thisPipe = Game()#dla każdej rury tworzony jest obiekt klasy Game() a następnie wywoływana metoda drawPipe, która rysuje rurę na planszy. Metoda drawPipe przyjmuje dwa argumenty (pozycję rury(i) oraz split)
             thisPipe.Pipe(i, split)
 
-    def printFrame(self): #funkcja ma na celu wyświetlić ramkę planszy gry na ekranie
+    def printFrame(self):
         for i in range(height):
-            res = ""      #dla każdej iteracji zmienna res jest inicjowana jako pusty łańcuch znaków
+            res = " "
             for j in range(width):
-                res += gameBoard[i][j] #w każdej iteracji pętli , wartość gameBoard[i][j] jest dodawana do łańcucha znaków res
-            print(res) #po zakończeniu pętli całość planszy drukowana jest na ekranie
+                res += gameBoard[i][j]    
+            print(res)
     def updatePipes(self, frames): #funckja ta jest odpowiedzialna za aktualizowanie rur w grze            
         
         if(frames % 3 == 0): #instrukcja if sprawdza, czy liczba ramek jest podzielna przez 3 za pomocą operatora modulo. Jeśli tak, to pozycja pierwszej rury jest zmniejszana o 1
@@ -114,7 +114,7 @@ class Bird():
         bird.D_Bird(5, Bird_OY_Position+dropBy) #bird.drawBird(5, birdYPos+dropBy) - wywołuje metodę drawBird() na obiekcie bird, która rysuje ptaka na ekranie 
 
 
-class Main():
+class main():
     global collision, score    #deklaruje zmienne 'collision' i 'score' jako zmienne globalne, 'collision' przechowuje informację o tym, czy ptak zderzył się z rurą, a score przechowuje wynik gracza                                  
     jumped = endGame = scoreUpdated = False   #inicjuja trzech zmiennych boolowskich (jumped, endGame, scoreUpdated) na wartość False, jumped przechowuje informację o tym, czy ptak wykonał już skok, 
                                               #'endGame' przechowuje informację o tym, czy gra powinna się zakończyć, a scoreUpdated przechowuje informację o tym, czy wynik gracza został zaktualizowany                                    
@@ -131,7 +131,7 @@ class Main():
             os.system('cls')
             if(not jumped):                     #sprawdzene, czy ptak wykonał już skok, jeśli nie, to wywołuje metodę 'gravity()' na obiekcie bird, która implementuje grawitację i aktualizuje położenie ptaka na ekranie
                 bird.gravity()                  
-
+            game.updatePipes(frames)          
             game.printFrame()               
   
             frames += 1                      #zwiększenie wartości 'frames' o 1 
@@ -153,7 +153,7 @@ class Main():
                     endGame = True                     #
                     break                              #
 
-            wait = round(time.time()-t0, 2)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
+            wait = round(time.time()-t0, 1)                  #oblicznie czasu, który upłyną od momentu rozpoćżecia każej iteracji pętli gry do momentu, w którym użytkownik wykonał skok lub nacisnięto przycisk kończący gre
             
             time.sleep(frameTime-wait)                       #ustawienie przerwy w grze tak, aby każda iteracja trwała około 0,2 sekundy.
 
@@ -167,4 +167,4 @@ class Main():
 
 
 if __name__ == '__main__':
-    Main()           #wywołanie funkcji 'main'
+    ain()           #wywołanie funkcji 'main'
