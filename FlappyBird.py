@@ -149,7 +149,7 @@ class main():
                 if keyboard.is_pressed(' '):           #jeśli użytkownik naciśnie klawisz e, to ustawiamy wartość 'endGame' na 'True' i kończymy grę
                     jumped = True;                     #
                     bird.jump()                        #
-                    break;                             #
+                    break                             #
                 elif keyboard.is_pressed('e'):         #
                     endGame = True                     #
                     break                              #

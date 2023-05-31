@@ -3,6 +3,7 @@ import keyboard, subprocess, os, time
 level = 0
 width, height = 50, 9
 page = 0
+
 class Board():
     def plansza2():
         N_menu = width-6
@@ -21,24 +22,38 @@ class Board():
 class main():
     os.system('cls')
     Board.plansza2()
-    print("             current page: " + str(page) +"                                 w => next page")
-    while(time.time()): 
-        if keyboard.is_pressed("s"):
-            page-=1
-            break
-        if keyboard.is_pressed("w"):
-            page+=1
-            print("             current page: " + str(page) +"          press s => page-1       w => next page")
-            break
-    while(time.time()):
-        if page == 1:
+    print("             current page: " + str(page) +"                                 <= s or w =>")
+    
+    f_time = 0.2
+    while True: 
+        t0 = time.time()
+        while(time.time()-t0 < f_time):
+                                                       
+            if keyboard.is_pressed('w'):
+                page +=1
+                print("             current page: " + str(page) +"                 <= s or w =>")
+                break
+            if keyboard.is_pressed('s'):
+                page -=1
+                print("             current page: " + str(page) +"                 <= s or w =>")
+                break                                                           
+
+        wait = round(time.time()-t0, 1)                  
+            
+        time.sleep(f_time-wait)
+        if page > 1: page = 0 
+        if page == 0:
+            os.system('cls')
+            Board.plansza2()
+            print("\n"+"                                  Press SPACE to select game")
+            print("             current page: " + str(page) +"                 <= s or w =>")
+        elif page == 1:
             os.system('cls')
             Board.plansza3()
             print("\n"+"                                  Press SPACE to select game")
-            print("             current page: " + str(page) +"          press s => page-1       w => next page")
+            print("             current page: " + str(page) +"                 <= s or w =>")
             if keyboard.is_pressed(" "): 
                 subprocess.run(["python", "FlappyBird.py"])
-                break
 
 
 
