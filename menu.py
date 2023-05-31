@@ -1,7 +1,13 @@
 import keyboard, subprocess, os
 
+width, height = 20, 11
+menu = []
+def plansza():
     os.system('cls')
-    print("navigate by pressing W or S")
-    if keyboard.is_pressed("w"): level += 1
-    if keyboard.is_pressed("s"): level -= 1
-    #subprocess.run(["python", "FlappyBird.py"])     
+    for i in range(height): 
+        res = ['#' for i in range(width)]
+        menu.append(res)
+    print(*menu, sep ='\n')
+
+print(plansza())
+   #subprocess.run(["python", "FlappyBird.py"])     
