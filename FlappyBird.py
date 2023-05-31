@@ -82,14 +82,14 @@ class Bird():
         body = '#'
         for i in range(height): #pętla for iterująca przez cała wysokość - 1
             for j in range(x, x+3):  #pętla for iterująca od wartości x do wartości x + 3
-                coor = gameBoard[i][j] #utworzenie zmiennej 'coor' i nadanie jej wartości 'gameBoard[i][j]'
-                if(coor == body or coor == face): #sprawdzenie czy któryś z elementów ptaka jest równy z 'coor' 
+                c1 = gameBoard[i][j] #utworzenie zmiennej 'c1' i nadanie jej wartości 'gameBoard[i][j]'
+                if(c1 == body or c1 == face): #sprawdzenie czy któryś z elementów ptaka jest równy z 'c1' 
                     gameBoard[i][j] = '-' if (i < 8) else '=' #jeżeli tak to przypisuje 'gameBoard[i][j]' nową wartość 
-        coor = gameBoard[y][x]
+        c1 = gameBoard[y][x]
         right = gameBoard[y][x+1]
         pole = '█'
 
-        if(coor == pole or right == pole): #sprawdzenie czy ptak nie udeżył w rure ,jeżeli tak to kolizje ustawiamy na 'True"
+        if(c1 == pole or right == pole): #sprawdzenie czy ptak nie udeżył w rure ,jeżeli tak to kolizje ustawiamy na 'True"
             global collision
             collision = True
 
@@ -140,8 +140,8 @@ class main():
                 frames = 1
             print("Your score is " + str(score))       #wyświetlenie wyniku użytkownika na ekranie
 
-            print("Press \"e\" to end the round")
-            print("Press space to jump! ")
+            print(" e => koniec")
+            print("Space => jump")
             t0 = time.time()                           #pobranie czasu rozpoczęcia interakcji użytkownika z klawiaturą i ustawiamy ją na wartość 'False'
             jumped = False                             
             while(time.time()-t0 < frameTime):         # utworzenie pętli, która działa przez określony czas 'frameTime' i czeka na interakcję użytkownika z klawiaturą, 
@@ -159,8 +159,8 @@ class main():
             time.sleep(frameTime-wait)        
 
         if(collision):                                       #sprawdzenie, czy w trakcie gry doszło do kolizji między ptakiem a rurami, jeśli tak, wyświetla stosowny komunikat
-            print("\nWhoops, you had a collision!")
-        userIn = input("\nType \"end\" to end the game, press \"enter\" to play again:\n")
+            print("\nPrzegrales!")
+        userIn = input("\nNapisz \"end\" aby zakonczyc lub wpcisnij \"eneter\" aby zagrac jeszcze raz\n")
         if("end" in userIn):              #jeśli użytkownik wprowadził "end" na wejściu, ustawia wartość 'endGame' na True, co spowoduje zakończenie gry
             endGame = True      
         else:                             #jeśli użytkownik wprowadził cokolwiek innego, ustawia wartości 'collision'i endGame na False, co umożliwi ponowne uruchomienie gry
