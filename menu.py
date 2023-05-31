@@ -1,13 +1,27 @@
-import keyboard, subprocess, os
+import keyboard, subprocess, os, time
 
-width, height = 20, 11
-menu = []
-def plansza():
+level = 0
+width, height = 50, 9
+page = 0
+def plansza2():
+    N_menu = width-6
+    for i in range(int((height-1)/2)):
+        print("-"*width*2)
+    print("-"*N_menu+"!MENU!"+ "-"*width)
+    for i in range(int((height-1)/2)):
+        print("-"*width*2)
+class main():
     os.system('cls')
-    for i in range(height): 
-        res = ['#' for i in range(width)]
-        menu.append(res)
-    print(*menu, sep ='\n')
+    plansza2()
+    print("\n"+"                                  Press SPACE to select game")
+    while(time.time()):
+        if keyboard.is_pressed("s"):
+            page-=1
+            print("             current page: " + str(page) +"          press s => page-1       w => next page")
+            break
+        if keyboard.is_pressed("w"):
+            page+=1
+            print("             current page: " + str(page) +"          press s => page-1       w => next page")
+            break
 
-print(plansza())
-   #subprocess.run(["python", "FlappyBird.py"])     
+    #subprocess.run(["python", "FlappyBird.py"])      
