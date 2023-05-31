@@ -30,7 +30,7 @@ class Game():
         pipeSplitsQueue = [] #lista służąca do przechowywania kolejki podziałów rur
         for i in range(height): 
             for j in range(width):
-                gameBoard[i][j] ='-' if (i < 8) else '=' #iterator i iteruje po wszystkich elementach planszy, każdy element ustawiany jest na odpowiedni kolor
+                gameBoard[i][j] ='-' if (i < 8) else '=' #iterator i iteruje po wszystkich elementach planszy=
         firstPipePos = 15   #ustawienie pozycji pierwszej rury na 15  
         for i in range(15, 100, 15): #ustawianie pozycji innych rur co 15
             split = random.randint(5, 8)  #każda rura ma losową wartość split
