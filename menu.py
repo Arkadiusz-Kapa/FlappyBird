@@ -10,18 +10,31 @@ def plansza2():
     print("-"*N_menu+"!MENU!"+ "-"*width)
     for i in range(int((height-1)/2)):
         print("-"*width*2)
+def plansza3():
+    N_menu = width-6
+    for i in range(int((height-1)/2)):
+        print("-"*width*2)
+    print("-"*N_menu+"!FlappyBird!"+ "-"*N_menu)
+    for i in range(int((height-1)/2)):
+        print("-"*width*2)
 class main():
     os.system('cls')
     plansza2()
-    print("\n"+"                                  Press SPACE to select game")
-    while(time.time()):
+    print("             current page: " + str(page) +"                                 w => next page")
+    while(time.time()): 
         if keyboard.is_pressed("s"):
             page-=1
-            print("             current page: " + str(page) +"          press s => page-1       w => next page")
             break
         if keyboard.is_pressed("w"):
             page+=1
             print("             current page: " + str(page) +"          press s => page-1       w => next page")
             break
-
-    #subprocess.run(["python", "FlappyBird.py"])      
+    while(time.time()):
+        if page == 1:
+            os.system('cls')
+            plansza3()
+            print("\n"+"                                  Press SPACE to select game")
+            print("             current page: " + str(page) +"          press s => page-1       w => next page")
+            if keyboard.is_pressed(" "): 
+                subprocess.run(["python", "FlappyBird.py"])
+                break
