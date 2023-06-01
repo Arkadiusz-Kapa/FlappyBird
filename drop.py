@@ -1,7 +1,7 @@
 import keyboard, os, random, time
 
 #Zmienne globalne:
-width, height = 10, 100 #ustawienie wysokości i szerokości
+width, height = 10, 40 #ustawienie wysokości i szerokości
 Ball_OX = width // 2
 PlankSplitsQueue = []
 gameBoard = [[0 for x in range(width)] for y in range(height)]
@@ -13,11 +13,9 @@ class Game():
     def Plank(self,Ball_OY, split):
         for i in range(width):
             if(not(split-3 <= i <= split)):
-                gameBoard[i][Ball_OY]= "@"
-                if(Ball_OY+1 < height):
-                    gameBoard[i][Ball_OY+1] = '@'
-                    if(Ball_OY+2 < height): 
-                        gameBoard[i][Ball_OY+2] = '-'
+                gameBoard[Ball_OY][i]= "@"
+                if(Ball_OY+1 < height): 
+                    gameBoard[Ball_OY+1][i] = '-'
 
     def StartGame(self):
         global firstPlankPos, PlankSplitsQueue
@@ -25,10 +23,10 @@ class Game():
             for j in range(width):
                 gameBoard[i][j] = "-"
         
-        firstPlankPos = 10
-        for i in range (10, 100 , 10):
+        firstPlankPos = 5
+        for i in range (5, 40 , 5):
             split = random.randint(4,8)
-            PlankSplitsQueue.append= split
+            PlankSplitsQueue.append(split)
             ThisPlank = Game()
             ThisPlank.Plank(i,split)
     def printFrame(self):
@@ -41,7 +39,7 @@ class Game():
 class Ball():
     def D_Ball(seld, x, y):
         global Ball_OX
-        Ball_OX = x
+        Ball_OX = x//2
         body = "█"
         for i in range(y, y+2):
             for j in range (width):
@@ -59,7 +57,7 @@ class Ball():
     def Gravity(self):
         dropBy = 1
         Ball = Ball()
-        Ball.D_Ball(2, Bird_OY+dropBy)
+        Ball.D_Ball(Bird_OY+dropBy, 5)
 
 
 
@@ -72,21 +70,22 @@ class main():
         score = 0
         Ball = Ball()
         Game = Game()
-        Game.startGame()
+        Game.StartGame()
         Ball.D_Ball(Ball_OX, 2)
         Game.printFrame()
         while (not collision and not endGame):
-            os.system('cls')
+            #os.system('cls')
             frames +=1
             if frames == 1000:
                 frames = 1
+            t0 =time.time()
             while(time.time()-t0 < f_time):
                                                             
                 if keyboard.is_pressed('a'):
-                    Bird_OX +=1
+                    Ball_OX +=1
                     break
                 if keyboard.is_pressed('d'):
-                    Bird_OX -=1
+                    Ball_OX -=1
                     break 
             wait = round(time.time()-t0, 1)                  
                     
