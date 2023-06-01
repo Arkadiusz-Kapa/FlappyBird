@@ -102,8 +102,8 @@ class Bird():
         if(Bird_OY_Position > 1):  #sprawdza, czy bieżąca pozycja ptaka jest większa niż 1, jest to potrzebne, ponieważ nie chcemy, aby pt ak skakał poza górną granicę okna gry
             raise_by = 1    #jeśli bieżąca pozycja ptaka jest większa niż 1, to zmienna raiseby zostaje ustawiona na 1, co oznacza, że ptak zostanie przesunięty o 1 piksel w górę
         bird = Bird()      #tworzy nowy obiekt klasy 'Bird', która zawiera informacje o wyglądzie i pozycji ptaka na ekranie   
-        bird.D_Bird(5, Bird_OY_Position-raise_by) #wywołuje metodę 'drawBird()' na obiekcie bird, która rysuje ptaka na ekranie 
-        #argumenty 5 i Bird_OY_Postition-raiseby przekazane do metody 'drawBird()' określają położenie ptaka na osi X oraz Y odpowiednio
+        bird.D_Bird(5, Bird_OY_Position-raise_by) #wywołuje metodę 'D_Bird()' na obiekcie bird, która rysuje ptaka na ekranie 
+        #argumenty 5 i Bird_OY_Postition-raiseby przekazane do metody 'D_Bird()' określają położenie ptaka na osi X oraz Y odpowiednio
     
     def gravity(self):  #zdefiniowanie funkcji 'gravity'
          
@@ -112,7 +112,7 @@ class Bird():
             #jeśli tak, to zmienna dropBy zostaje ustawiona na 0, aby uniemożliwić dalsze opadanie ptaka
             dropBy = 0
         bird = Bird()   #tworzy nowy obiekt klasy "Bird", która zawiera informacje o wyglądzie i pozycji ptaka na ekranie
-        bird.D_Bird(5, Bird_OY_Position+dropBy) #bird.drawBird(5, birdYPos+dropBy) - wywołuje metodę drawBird() na obiekcie bird, która rysuje ptaka na ekranie 
+        bird.D_Bird(5, Bird_OY_Position+dropBy) #bird.D_Bird(5, birdYPos+dropBy) - wywołuje metodę D_Bird() na obiekcie bird, która rysuje ptaka na ekranie 
 
 
 class main():

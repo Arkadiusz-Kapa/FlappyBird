@@ -14,9 +14,9 @@ class Game():
         for i in range(width):
             if(not(split-3 <= i <= split)):
                 gameBoard[i][Ball_OY]= "@"
-                if(Ball_OY+1 < width):
+                if(Ball_OY+1 < height):
                     gameBoard[i][Ball_OY+1] = '@'
-                    if(Ball_OY+2 < width): 
+                    if(Ball_OY+2 < height): 
                         gameBoard[i][Ball_OY+2] = '-'
 
     def StartGame(self):
@@ -40,23 +40,57 @@ class Game():
 
 class Ball():
     def D_Ball(seld, x, y):
-        global Ball_OY
-        Ball_OY = y
+        global Ball_OX
+        Ball_OX = x
+        body = "█"
+        for i in range(y, y+2):
+            for j in range (width):
+                c1= gameBoard[i][j]
+                if body == c1:
+                    gameBoard[i][j] = "-"
+        c1 = gameBoard[i][j]
+        pole = '@'
+        if c1 == pole:
+            global colision
+            colision = True
+        MainBody = "█"
+        gameBoard[i][j] = MainBody
+    
+    def Gravity(self):
+        dropBy = 1
+        Ball = Ball()
+        Ball.D_Ball(2, Bird_OY+dropBy)
+
+
 
 class main():
-        while True:
-            Game.startGame()
-            Game.printFrame
-        while(time.time()-t0 < f_time):
-                                                       
-            if keyboard.is_pressed('w'):
-                page +=1
-                print("             current page: " + str(page) +"                 <= s or w =>")
-                break
-            if keyboard.is_pressed('s'):
-                page -=1
-                print("             current page: " + str(page) +"                 <= s or w =>")
-                break 
+    global collison, score
+    endGame = False
+    frames = 1
+    f_time = 0.2
+    while not endGame:
+        score = 0
+        Ball = Ball()
+        Game = Game()
+        Game.startGame()
+        Ball.D_Ball(Ball_OX, 2)
+        Game.printFrame()
+        while (not collision and not endGame):
+            os.system('cls')
+            frames +=1
+            if frames == 1000:
+                frames = 1
+            while(time.time()-t0 < f_time):
+                                                            
+                if keyboard.is_pressed('a'):
+                    Bird_OX +=1
+                    break
+                if keyboard.is_pressed('d'):
+                    Bird_OX -=1
+                    break 
+            wait = round(time.time()-t0, 1)                  
+                    
+            time.sleep(f_time-wait)
 
 if __name__ == '__main__':
     main()           #wywołanie funkcji 'main'        
