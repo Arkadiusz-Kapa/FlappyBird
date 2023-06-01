@@ -19,6 +19,13 @@ class Board():
         print("-"*N_menu+"!FlappyBird!"+ "-"*N_menu)
         for i in range(int((height-1)/2)):
             print("-"*width*2)
+    def plansza4():
+        N_menu = width-4
+        for i in range(int((height-1)/2)):
+            print("-"*width*2)
+        print("-"*N_menu+"!DropBy!"+ "-"*N_menu)
+        for i in range(int((height-1)/2)):
+            print("-"*width*2)
 class main():
     os.system('cls')
     Board.plansza2()
@@ -41,7 +48,8 @@ class main():
         wait = round(time.time()-t0, 1)                  
             
         time.sleep(f_time-wait)
-        if page > 1: page = 0 
+        if page > 2: page = 0
+        if page < 0: page = 0 
         if page == 0:
             os.system('cls')
             Board.plansza2()
@@ -54,6 +62,13 @@ class main():
             print("             current page: " + str(page) +"                 <= s or w =>")
             if keyboard.is_pressed(" "): 
                 subprocess.run(["python", "FlappyBird.py"])
+        elif page == 2:
+            os.system('cls')
+            Board.plansza4()
+            print("\n"+"                                  Press SPACE to select game")
+            print("             current page: " + str(page) +"                 <= s or w =>")
+            if keyboard.is_pressed(" "): 
+                subprocess.run(["python", "DropBy.py"])
 
 
 
