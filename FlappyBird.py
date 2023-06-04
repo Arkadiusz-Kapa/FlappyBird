@@ -61,7 +61,7 @@ class Game():
                 firstPipePos += 15
                 pipeSplitsQueue.pop(0)
             c = 0
-            for i in range(firstPipePos, width , 15): #pętla for przechodzi przez wszytkie pozycje na planszy pomiędzy pierwszą rurą a końcem planszy zdefiniowanej jako 'w'
+            for i in range(firstPipePos, width , 15): #pętla for przechodzi przez wszytkie pozycje na planszy pomiędzy pierwszą rurą a końcem planszy zdefiniowanej jako 'width'
                 thisPipe = Game()  #dla każdej pozycji na planszy, tworzony jest nowy obiekt 'Game'
                 if(c < len(pipeSplitsQueue)):   #sprawdzane jest czy istnieje już kolejka podziałów rury o odpowiedniej długości, w której są zapisane wyniki losowania z funkcji 'drawPipe'
                     thisPipe.Pipe(i, pipeSplitsQueue[c]) #jeśli istnieje, to rysujemy rure na bieżącej planszy, korzystając z podziau rury, który znajduje się w 'pipeSplitsQueue[c]'
