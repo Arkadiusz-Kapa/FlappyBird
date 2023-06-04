@@ -49,7 +49,8 @@ class main():
             
         time.sleep(f_time-wait)
         if page > 2: page = 0
-        if page < 0: page = 0 
+        elif page < 0: page = 2 
+        
         if page == 0:
             os.system('cls')
             Board.plansza2()
