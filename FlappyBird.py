@@ -1,7 +1,5 @@
 import keyboard, os, random, time
 
-#zmiana preskodsci frametime:
-game_speed = 0.2
 #Zmienne globalne:
 width, height = 100, 10 #ustawienie wysokości i szerokości
 Bird_OY_Position = height // 2
@@ -120,7 +118,7 @@ class main():
     jumped = endGame = scoreUpdated = False   #inicjuja trzech zmiennych boolowskich (jumped, endGame, scoreUpdated) na wartość False, jumped przechowuje informację o tym, czy ptak wykonał już skok, 
                                               #'endGame' przechowuje informację o tym, czy gra powinna się zakończyć, a scoreUpdated przechowuje informację o tym, czy wynik gracza został zaktualizowany                                    
     frames = 1                   #inicjuja zmiennej 'frames' na wartość 1, zmienna ta przechowuje informację o liczbie klatek gry, która została już wyświetlona                 
-    frameTime = game_speed              #inicjuja zmiennej 'frameTime' na wartość 0.2, zmienna ta przechowuje informację o czasie trwania jednej klatki gry
+    frameTime = 0.2              #inicjuja zmiennej 'frameTime' na wartość 0.2, zmienna ta przechowuje informację o czasie trwania jednej klatki gry
     while(not endGame):          #rozpoczyna pętlę nieskończoną, która będzie działać, dopóki gra nie zostanie zakończona.
         score = 0                #ustawienie wartość wyniku gracza na 0.
         game = Game()            #tworzenie nowego obiektu klasy 'Game', który reprezętuje gre
